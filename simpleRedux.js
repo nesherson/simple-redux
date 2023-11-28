@@ -1,4 +1,9 @@
-function createStore(reducer) {
+function createStore(reducer, enhancer) {
+    if (enhancer) {
+        return enhancer(createStore)(reducer);
+    }
+
+
     let state = reducer(undefined, { type: "@@INIT" });
     const listeners = [];
 
@@ -14,6 +19,21 @@ function createStore(reducer) {
     };
 }
 
+function applyMiddleware(middleware) {
+    return (createStore) => (reducer) => {
+        const store = createStore(reducer);
+
+        return {
+            ...store,
+            dispatch: middleware({
+                getState: store.getState,
+                dispatch: store.dispatch
+            })
+        };
+    }
+}
+
 const SimpleRedux = {
-    createStore   
+    createStore,
+    applyMiddleware   
 };

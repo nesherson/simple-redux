@@ -12,9 +12,21 @@ const initialState = {
         return state;
     }
   }
+
+  function logger({getState, dispatch}) {
+    return (action) => {
+        console.log("Will dispatch -> ", action);
+
+        const returnValue = dispatch(action);
+
+        console.log("State after dispatch", getState());
+
+        return returnValue;
+    };
+  }
   
 //   const store = Redux.createStore(counterReducer);
-  const store = SimpleRedux.createStore(counterReducer);
+  const store = SimpleRedux.createStore(counterReducer, SimpleRedux.applyMiddleware(logger));
   
   const valueEl = document.getElementById("value");
   
