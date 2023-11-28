@@ -13,7 +13,8 @@ const initialState = {
     }
   }
   
-  const store = Redux.createStore(counterReducer);
+//   const store = Redux.createStore(counterReducer);
+  const store = SimpleRedux.createStore(counterReducer);
   
   const valueEl = document.getElementById("value");
   
